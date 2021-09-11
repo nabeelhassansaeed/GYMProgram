@@ -1,0 +1,67 @@
+﻿@model IEnumerable<GYMProgram.Models.WeekDaysHead>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Section.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Guid" class="btn btn-outline-info btn-sm">Edit</a> |
+                <a asp-action="Index" asp-controller="WeekDays" asp-route-id="@item.Guid" class="btn btn-outline-warning btn-sm">Details</a> |
+                <a asp-action="GenerationBookings" asp-route-id="@item.Guid" class="btn btn-outline-success btn-sm">Generat</a> |                
+                @*<a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

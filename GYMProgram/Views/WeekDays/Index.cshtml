@@ -1,0 +1,82 @@
+﻿@model IEnumerable<GYMProgram.Models.WeekDay>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-info btn-sm">Create New</a>|
+    <a asp-action="CopyDay" class="btn btn-outline-success btn-sm">Copy Day To Day</a>
+</p>
+<table class="table table-sm table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkStartHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkEndHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Minutes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QTYCustomers)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @{
+                    var WorkStartHour = item.WorkStartHour.ToString("hh:mm tt");
+                    var WorkEndHour = item.WorkEndHour.ToString("hh:mm tt");
+                }
+                @*@Html.DisplayFor(modelItem => item.WorkStartHour)*@
+                <span>@WorkStartHour</span>
+            </td>
+            <td>
+                <span>@WorkEndHour</span>
+                @*@Html.DisplayFor(modelItem => item.WorkEndHour)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Minutes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QTYCustomers)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a> |
+               @* <a asp-action="Details" asp-route-id="@item.Guid">Details</a> |*@
+               
+                <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

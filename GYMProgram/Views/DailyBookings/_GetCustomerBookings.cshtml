@@ -1,0 +1,42 @@
+﻿@model IEnumerable<GYMProgram.Models.DailyBooking>
+
+<div class="container col-12">
+    <div class="row text-center">
+        <br>
+        <div class="col-12">
+            <h2 class="text-primary" style="padding:5px">My Bookings</h2>
+        </div>
+        <br>
+        @{
+            string date = "";
+            string StartDate = "";
+            string EndDate = "";
+            string status = "";
+
+        }
+        @foreach (var item in Model)
+        {
+
+            date = item.StartDate.ToString("yyyy-MM-dd");
+            StartDate = item.StartDate.ToString("hh:mm tt");
+            EndDate = item.EndDate.ToString("hh:mm tt");
+            status = item.Status ? "مكتمل" : "متاح";
+
+
+            <label for="success" class="btn btn-success col-md-2 col-sm-12" style="margin: 4px; border-radius: 28px">
+                <h6><span>Date : </span><span>@date</span></h6>
+                <h6><span>From : </span><span>@StartDate</span></h6>
+                <h6><span>To : </span><span>@EndDate</span></h6>
+
+                <h6>
+                    <input type="button" class="btn btn-outline-dark" value="Cancel"
+                           onclick="AjaxCancelCustomerBooking('DIV_DailyBookings',document.getElementById('customer_Guid').value,'@item.Guid')" />
+                </h6>
+
+                @*<h6>@date</h6><h6>@StartDate</h6> <input type="button" id="success" class="badgebox">*@
+                @*<span class="badge">&check;</span>*@
+            </label>
+
+        }
+    </div>
+</div>

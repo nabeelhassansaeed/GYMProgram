@@ -1,0 +1,143 @@
+﻿@model IEnumerable<GYMProgram.Models.Customer>
+@{
+    ViewData["Title"] = "CheckSubscription";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<style>
+    .divbooking {
+        padding: 10px;
+        height: auto;
+        border: 3px;
+        border-color: red;
+        background-color: #f8f9fa;
+        align-items: center;
+        border-radius: 10px;
+    }
+</style>
+<div class="container">
+    <div class="row text-center">
+        <h1 class="text-center col-12">Check Subscription</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        @{
+            if (Model == null)
+            {
+                <div class="card border-dark  text-center col-lg-12 col-sm-12">
+                    <div class="card-body">
+                        <form asp-action="CheckSubscription">
+
+                            <div class="input-group col-lg-12 col-sm-12">
+                                <input type="text" class="form-control" placeholder="Enter ID Number Or Mobile Number ...."
+                                       aria-label="Enter ID Number Or Mobile Number" aria-describedby="basic-addon2" name="CustomerID">
+                                <div class="input-group-append">
+                                    <input type="submit" value="GO" class="btn btn-outline-success" id="basic-addon2" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                if (Model.Count() > 1)
+                {
+
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-9 text-left">
+                                            <h5 class="text-c-purple">@item.ExpirDate.ToString("yyyy-MM-dd")</h5>
+                                            <h6 class="text-muted m-b-0">Subscription Expir</h6>
+                                            <h6 class="text-muted m-b-0">Mobile: @item.Mobile</h6>
+                                            <h6 class="text-muted m-b-0">ID: @item.IDNumber</h6>
+                                        </div>
+                                        <div class="col-3 text-right"> 
+                                            <i class="ti-user f-28"></i>
+                                        </div>
+                                        @*<div class="col-12 text-center">
+                                            <h3 class="text-dark m-b-0">@item.Name</h3>
+                                        </div>*@
+                                </div>
+                            </div>
+                                <div class="card-footer row align-items-center">
+                                    <form asp-action="CheckSubscription" style="min-width:100%">
+                                        <input type="hidden" value="@item.Guid" name="CustomerID" />
+                                        <button class="btn waves-effect waves-light btn-success btn-outline-success col-12" type="submit">
+                                            <h3 class="text-dark m-b-0">@item.Name</h3>
+                                        </button>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                }
+
+                    <div id="formSearchBookings" style="display:none" class="col-12 text-center divbooking scroll-container">
+                        @Html.Partial(@"../DailyBookings/_FromDateView")
+                    </div>
+                    <div id="DIV_DailyBookings" class="col-12 scroll-container">
+
+                    </div>
+                }
+                else
+                {
+                    if (Model.Count() == 1)
+                    {
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-9 text-left">
+                                            <input type="hidden" value="@Model.LastOrDefault().Guid" id="customer_Guid" />
+                                            <h5 class="text-c-purple">@Model.LastOrDefault().ExpirDate.ToString("yyyy-MM-dd")</h5>
+                                            <h6 class="text-muted m-b-0">Subscription Expir</h6>
+                                            <h6 class="text-muted m-b-0">Mobile: @Model.LastOrDefault().Mobile</h6>
+                                            <h6 class="text-muted m-b-0">ID: @Model.LastOrDefault().IDNumber</h6>
+                                        </div>
+                                        <div class="col-3 text-right">
+                                            <i class="ti-user f-28"></i>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <h3 class="text-dark m-b-0">@Model.LastOrDefault().Name</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer row align-items-center">
+
+                                    <button class="btn waves-effect waves-light btn-success btn-outline-success col-md-6"
+                                            onclick="AjaxGetCustomerBooking('DIV_DailyBookings','@Model.LastOrDefault().Guid')">
+                                        <i class="icofont icofont-calendar">
+                                        </i>Get My Bookings
+                                    </button>
+
+                                    <button class="btn waves-effect waves-light btn-success btn-outline-success col-md-6"
+                                            onclick="document.getElementById('formSearchBookings').style.display = 'block'">
+                                        <i class="icofont icofont-calendar">
+                                        </i>Create Booking
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div id="formSearchBookings" style="display:none" class="col-12 text-center divbooking scroll-container">
+                            @Html.Partial(@"../DailyBookings/_FromDateView")
+                        </div>
+                        <div id="DIV_DailyBookings" class="col-12 scroll-container">
+
+                        </div>
+
+                    }
+                }
+            }
+        }
+
+    </div>
+    </div>

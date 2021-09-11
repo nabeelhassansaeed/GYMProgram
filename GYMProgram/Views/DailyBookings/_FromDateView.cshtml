@@ -1,0 +1,35 @@
+﻿
+<div class="row col-12">
+    <input type="date" class="form-control form-control-sm col-md-4 col-sm-12" id="input_Date"
+           name="date" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")">
+
+    <select class="form-control form-control-sm col-md-4 col-sm-12" id="Section_Guid">
+        @foreach (var item in ViewBag.SectionGuid)
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    </select>
+
+  
+        <input type="button" value="Search" class="btn btn-outline-primary col-md-4 col-sm-12 form-control-sm" onclick="AjaxGetBookingsFromDate('DIV_AvailableBookings')" />
+  
+
+
+    @*<div class="form-group">
+            <div class="form-group">
+                <input type="date" class="form-control form-control-sm" id="input_Date" name="date" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")">
+            </div>
+            <select class="form-control  form-control-sm" id="Section_Guid">
+                @foreach (var item in ViewBag.SectionGuid)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Search" class="btn btn-outline-success btn-sm" onclick="AjaxGetBookingsFromDate('DIV_AvailableBookings')" />
+        </div>
+    *@
+</div>
+<div id="DIV_AvailableBookings" class="col-12  scroll-container"></div>
+
