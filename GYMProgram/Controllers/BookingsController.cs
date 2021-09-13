@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GYMProgram.Data;
 using GYMProgram.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class BookingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +27,7 @@ namespace GYMProgram.Controllers
             var applicationDbContext = _context.Bookings.Include(b => b.Section).OrderBy(b=>b.StartDate);
             return View(await applicationDbContext.ToListAsync());
         }
-
+       
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

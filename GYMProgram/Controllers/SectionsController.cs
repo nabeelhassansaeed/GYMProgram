@@ -9,9 +9,11 @@ using GYMProgram.Data;
 using GYMProgram.Models;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class SectionsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GYMProgram.Data;
 using GYMProgram.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class GYMsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GYMProgram.Data;
 using GYMProgram.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +21,7 @@ namespace GYMProgram.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Customers
         public async Task<IActionResult> Index()
         {
@@ -26,6 +29,7 @@ namespace GYMProgram.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -45,6 +49,7 @@ namespace GYMProgram.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Customers/Create
         public IActionResult Create()
         {
@@ -52,6 +57,7 @@ namespace GYMProgram.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Customer customer, string GYM_Guid)
@@ -68,6 +74,7 @@ namespace GYMProgram.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -85,6 +92,7 @@ namespace GYMProgram.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Customer customer, string GYM_Guid)
@@ -118,6 +126,7 @@ namespace GYMProgram.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -137,6 +146,7 @@ namespace GYMProgram.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Administrator")]
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -147,14 +157,14 @@ namespace GYMProgram.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Administrator,User")]
         [HttpGet]
         public async Task<IActionResult> CheckSubscription()
         {
             //ViewData["Customers"] = new SelectList(_context.Customers, "Guid", "Name");
             return View();
         }
-
+        [Authorize(Roles = "Administrator,User")]
         [HttpPost]
         public async Task<IActionResult> CheckSubscription(string CustomerID)
         {

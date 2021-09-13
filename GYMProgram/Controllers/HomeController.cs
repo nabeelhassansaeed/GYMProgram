@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    
     public class HomeController : Controller
     {
          

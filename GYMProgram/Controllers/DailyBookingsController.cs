@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GYMProgram.Data;
 using GYMProgram.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    
     public class DailyBookingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +21,7 @@ namespace GYMProgram.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: DailyBookings
         public async Task<IActionResult> Index()
         {
@@ -26,6 +29,7 @@ namespace GYMProgram.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: DailyBookings/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -46,6 +50,7 @@ namespace GYMProgram.Controllers
             return View(dailyBooking);
         }
 
+        [Authorize(Roles = "Administrator,User")]
         // GET: DailyBookings/Create
         public async Task<IActionResult> Create(Guid? sectionGuid, DateTime? date)
         {
@@ -59,6 +64,7 @@ namespace GYMProgram.Controllers
             return Json(new { messag = "يجب ادخال التاريخ" });
         }
 
+        [Authorize(Roles = "Administrator,User")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid customerguid, Guid bookingGuid)
@@ -102,6 +108,7 @@ namespace GYMProgram.Controllers
             return Json(new { messag = "خطأ" });
         }
 
+        [Authorize(Roles = "Administrator,User")]
         // GET: DailyBookings/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -120,6 +127,7 @@ namespace GYMProgram.Controllers
             return View(dailyBooking);
         }
 
+        [Authorize(Roles = "Administrator,User")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid customerguid, Guid bookingGuid)
@@ -136,6 +144,7 @@ namespace GYMProgram.Controllers
             return Json(new { messag = "خطأ" });
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: DailyBookings/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -156,6 +165,7 @@ namespace GYMProgram.Controllers
             return View(dailyBooking);
         }
 
+        [Authorize(Roles = "Administrator")]
         // POST: DailyBookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -167,6 +177,7 @@ namespace GYMProgram.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Administrator,User")]
         [HttpPost]
         public async Task<IActionResult> GetBookings(Guid customerguid, DateTime date)
         {
@@ -188,6 +199,7 @@ namespace GYMProgram.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator,User")]
         public async Task<List<DailyBooking>> SearchCustomerBookingsforguid(Guid customerguid, DateTime date)
         {
             List<DailyBooking> bookings;

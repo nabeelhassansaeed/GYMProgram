@@ -74,6 +74,8 @@ namespace GYMProgram.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            //Customers/CheckSubscription
+
 
             if (ModelState.IsValid)
             {
@@ -82,6 +84,10 @@ namespace GYMProgram.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Name, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var _user = await _userManager.FindByNameAsync(Input.Name);
+                    var role = await _userManager.GetRolesAsync(_user);
+             
+                    returnUrl = role.FirstOrDefault() == "User" ? Url.Content("~/Customers/CheckSubscription") : Url.Content("~/");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

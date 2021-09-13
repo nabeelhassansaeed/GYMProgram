@@ -9,9 +9,11 @@ using GYMProgram.Data;
 using GYMProgram.Models;
 using GYMProgram.BusinessFunctional;
 using GYMProgram.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GYMProgram.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class WeekDaysController : Controller
     {
         private readonly ApplicationDbContext _context;
